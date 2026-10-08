@@ -6,3 +6,6 @@
   --color-border-dark: #e6e8eb;
   --font-sans: "Inter Variable", "Segoe UI", Helvetica, Arial, sans-serif;
 }
+body {
+  background-color: #f9fafb;
+}

@@ -19,7 +19,7 @@ const Header = () => {
 
   return (
     <header className="border border-border-dark py-4">
-      <nav className="flex justify-between items-center mx-auto max-w-300 px-4">
+      <nav className="flex justify-between items-center mx-auto max-w-300">
         <a href="#" className="flex items-center text-primary">
           <BiCart className="font-bold text-3xl" />
           <span className="font-bold text-[1rem] md:text-2xl">Kartley</span>
