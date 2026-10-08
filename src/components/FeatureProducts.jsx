@@ -42,7 +42,6 @@ const FeatureProducts = () => {
   if (error) return <p className="p-4 text-red-600">{error}</p>;
 
   const featured = getFeatured(products);
-  console.log(featured); // remove once it works
 
   return (
     <section className="mx-auto mt-12 w-full max-w-300 px-4">
