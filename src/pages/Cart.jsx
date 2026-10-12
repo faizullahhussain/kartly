@@ -1,5 +1,5 @@
 import Breadcrumbs from '../components/Breadcrumbs';
-
+console.log(Array.from('from'));
 const Cart = () => {
   return (
     <section className='max-w-300 mx-auto'>
