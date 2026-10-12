@@ -68,7 +68,7 @@ const Shop = () => {
           <option value='Popular'>Popular</option>
           <option value='top_rated'>Top Rated</option>
           <option value='low_to_high'>Low to high</option>
-          <option value='top_rated'>high to low</option>
+          <option value='high_to_low'>high to low</option>
         </select>
       </div>
 
