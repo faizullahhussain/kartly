@@ -2,10 +2,18 @@ import { useEffect, useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductCard from '../components/ProductCard';
 
+const sortOptions = [
+  { label: 'Popular', value: 'popular' },
+  { label: 'Top Rated', value: 'top_rated' },
+  { label: 'Price: Low to High', value: 'low_to_high' },
+  { label: 'Price: High to Low', value: 'high_to_low' },
+];
+
 const Shop = () => {
   const [productList, setProductsList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [sortBy, setSortBy] = useState('popular');
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,12 +36,20 @@ const Shop = () => {
       ? productList
       : productList.filter((p) => selected.includes(p.category));
 
+  const sortedProducts = [...visible];
+
+  if (sortBy === 'low_to_high') {
+    sortedProducts.sort((a, b) => a.price - b.price);
+  } else if (sortBy === 'high_to_low') {
+    sortedProducts.sort((a, b) => b.price - a.price);
+  } else if (sortBy === 'top_rated') {
+    sortedProducts.sort((a, b) => b.rating - a.rating);
+  }
+
   // Pagination calculations
-  const totalPages = Math.ceil(visible.length / productsPerPage);
-
+  const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
   const startIndex = (currentPage - 1) * productsPerPage;
-
-  const currentProducts = visible.slice(
+  const currentProducts = sortedProducts.slice(
     startIndex,
     startIndex + productsPerPage,
   );
@@ -86,11 +102,17 @@ const Shop = () => {
           name='sort'
           id='sort'
           className='border border-border-dark p-3 rounded-md'
+          value={sortBy}
+          onChange={(e) => {
+            setSortBy(e.target.value);
+            setCurrentPage(1);
+          }}
         >
-          <option value='Popular'>Popular</option>
-          <option value='top_rated'>Top Rated</option>
-          <option value='low_to_high'>Low to high</option>
-          <option value='high_to_low'>High to low</option>
+          {sortOptions.map((opt) => (
+            <option value={opt.value} key={opt.value}>
+              {opt.label}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -161,7 +183,7 @@ const Shop = () => {
                       <button
                         key={pageNumber}
                         onClick={() => setCurrentPage(pageNumber)}
-                        className={`px-3 py-2 border border-border-dark rounded-md ${
+                        className={`px-3 py-2 border border-border-dark rounded-md cursor-pointer ${
                           currentPage === pageNumber
                             ? 'bg-primary text-white'
                             : 'bg-white hover:bg-gray-100'
