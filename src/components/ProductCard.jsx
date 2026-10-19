@@ -10,9 +10,9 @@ const ProductCard = ({ product }) => (
       />
     </div>
     <h3 className='mt-3 truncate font-bold text-secondary'>{product.title}</h3>
-    <p className='mt-1 text-sm text-gray-600'>
+    <div className='mt-1 text-sm text-gray-600'>
       <ProductRating rating={product.rating} />
-    </p>
+    </div>
     <div className='mt-2 flex items-center justify-between'>
       <span className='text-xl font-bold'>${product.price}</span>
       <button className='cursor-pointer rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-white hover:opacity-90'>

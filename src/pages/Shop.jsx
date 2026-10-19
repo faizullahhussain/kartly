@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductCard from '../components/ProductCard';
 
@@ -17,7 +18,6 @@ const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const productsPerPage = 6;
 
   const toggle = (category) => {
@@ -27,7 +27,6 @@ const Shop = () => {
         : [...prev, category],
     );
 
-    // Return to page 1 when categories change
     setCurrentPage(1);
   };
 
@@ -88,7 +87,11 @@ const Shop = () => {
   }
 
   if (error) {
-    return <p className='font-bold text-red-500 p-4'>{error}</p>;
+    return (
+      <p className='h-screen grid place-items-center font-bold text-red-500 p-4'>
+        {error}
+      </p>
+    );
   }
 
   return (
@@ -142,7 +145,9 @@ const Shop = () => {
         <div>
           <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
             {currentProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <NavLink key={product.id} to={`/product/${product.id}`}>
+                <ProductCard product={product} />
+              </NavLink>
             ))}
           </div>
 
