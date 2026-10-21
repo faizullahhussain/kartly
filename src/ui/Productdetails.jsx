@@ -1,14 +1,14 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { useState, useEffect } from 'react';
 import FeatureProducts from '../components/FeatureProducts';
-import { BsStar } from 'react-icons/bs';
 
 const Productdetails = () => {
   const { productId } = useParams();
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const star = '★';
 
   useEffect(() => {
     const loadProductDetails = async () => {
@@ -30,7 +30,7 @@ const Productdetails = () => {
       }
     };
     loadProductDetails();
-  }, []);
+  }, [productId]);
 
   if (loading) {
     return <p>Loading..</p>;
@@ -53,10 +53,14 @@ const Productdetails = () => {
           className='w-80 bg-[#e0e7ff] rounded-md'
         />
         <div>
-          <p>
-            <BsStar /> {product.rating}
-            <span>({product.reviews.length} reviews)</span>
+          <p className='flex items-center gap-1 text-[0.8rem] text-[#687386]'>
+            {star.repeat(5)}
+            {product.rating}
+            <span>({product.reviews?.length ?? 0} reviews)</span>
           </p>
+          <h3 className='text-2xl text-secondary font-bold'>{product.title}</h3>
+          <h3 className='text-2xl text-primary font-bold'>${product.price}</h3>
+          <p>{product.description}</p>
         </div>
       </div>
 
