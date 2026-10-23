@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { BiCart, BiHeart, BiSearch, BiUser } from 'react-icons/bi';
 import { FiMenu, FiX } from 'react-icons/fi';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 
 const links = [
   { name: 'Home', href: '/' },
@@ -17,6 +18,7 @@ const navClass = ({ isActive }) =>
   }`;
 
 const Header = () => {
+  const { count } = useContext(CartContext);
   const [openNav, setOpenNav] = useState(false);
 
   return (
@@ -67,7 +69,13 @@ const Header = () => {
               <BiUser />
             </li>
             <li>
-              <BiCart />
+              <Link to='/cart' className='relative inline-flex'>
+                <BiCart size={19} />
+
+                <span className='absolute -top-2 -right-2 min-w-3 min-h-3 flex items-center justify-center rounded-full bg-[#f59e0b] px-1 text-xs text-white'>
+                  {count}
+                </span>
+              </Link>
             </li>
           </ul>
         </div>

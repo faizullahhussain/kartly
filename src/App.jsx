@@ -5,10 +5,11 @@ import Cart from './pages/Cart';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Productdetails from './ui/Productdetails';
+import { CartProvider } from './context/CartContext';
 
 const App = () => {
   return (
-    <>
+    <CartProvider>
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -17,7 +18,7 @@ const App = () => {
         <Route path='/cart' element={<Cart />} />
       </Routes>
       <Footer />
-    </>
+    </CartProvider>
   );
 };
 
