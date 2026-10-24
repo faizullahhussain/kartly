@@ -22,7 +22,12 @@ const ProductCard = ({ product }) => {
       <div className='mt-2 flex items-center justify-between'>
         <span className='text-xl font-bold'>${product.price}</span>
         <button
-          onClick={() => dispatch({ type: 'add_to_cart', payload: product })}
+          onClick={() =>
+            dispatch({
+              type: 'add_to_cart',
+              payload: { ...product, quantity: 1 },
+            })
+          }
           className='cursor-pointer rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-white hover:opacity-90'
         >
           Add to cart

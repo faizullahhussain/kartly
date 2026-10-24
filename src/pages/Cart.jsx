@@ -1,13 +1,13 @@
 import { useContext } from 'react';
-import { FaXmark } from 'react-icons/fa6';
+import { FiTrash } from 'react-icons/fi';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { CartContext } from '../context/CartContext';
 
 const Cart = () => {
   const { state, count, dispatch } = useContext(CartContext);
 
-  const totalPrice = state.reduce((acc, current) => {
-    return acc + current.price;
+  const totalPrice = state.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
   }, 0);
 
   return (
@@ -40,19 +40,39 @@ const Cart = () => {
               </div>
 
               {/* Quantity controls */}
-              <div className='flex shrink-0 items-center gap-3 rounded-xl border border-gray-300 px-3 py-2'>
-                <button type='button' aria-label='Decrease quantity'>
+              <div className='flex shrink-0 items-center gap-3 rounded-md border border-gray-300 px-3'>
+                <button
+                  onClick={() =>
+                    dispatch({
+                      type: 'decrease_product_quantity',
+                      payload: { id: p.id },
+                    })
+                  }
+                  type='button'
+                  aria-label='Decrease quantity'
+                >
                   −
                 </button>
-                <span className='font-semibold'>1</span>
-                <button type='button' aria-label='Increase quantity'>
+                <span className='font-semibold'>{p.quantity}</span>
+                <button
+                  onClick={() =>
+                    dispatch({
+                      type: 'increase_product_quantity',
+                      payload: { id: p.id },
+                    })
+                  }
+                  type='button'
+                  aria-label='Increase quantity'
+                >
                   +
                 </button>
               </div>
 
               {/* Price and remove button */}
               <div className='flex shrink-0 items-center gap-4'>
-                <span className='font-bold'>${p.price}</span>
+                <span className='font-bold'>
+                  ${(p.price * p.quantity).toFixed(0)}
+                </span>
                 <button
                   onClick={() =>
                     dispatch({ type: 'remove_from_cart', payload: p.id })
@@ -61,18 +81,19 @@ const Cart = () => {
                   aria-label={`Remove ${p.title} from cart`}
                   className='text-red-500'
                 >
-                  <FaXmark />
+                  <FiTrash size={18} />
                 </button>
               </div>
             </div>
           ))}
         </div>
+
         <div className='border border-border-dark rounded-md bg-white p-4'>
           <h1 className='font-bold text-[0.8rem] mb-2'>Order Summary</h1>
           <ul>
             <li className='flex justify-between text-gray-500 text-[0.8rem]'>
               <span>Subtotal</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>${totalPrice.toFixed(0)}</span>
             </li>
             <li className='flex justify-between text-gray-500 text-[0.8rem]'>
               <span>Shipping</span>
@@ -81,7 +102,7 @@ const Cart = () => {
             <hr className='text-gray-300 mt-2' />
             <li className='flex justify-between font-bold text-[0.8rem] mt-2'>
               <span>Total</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>${totalPrice.toFixed(0)}</span>
             </li>
           </ul>
         </div>
