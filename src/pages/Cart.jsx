@@ -1,10 +1,14 @@
 import { useContext } from 'react';
-import { CartContext } from '../context/CartContext';
+import { FaXmark } from 'react-icons/fa6';
 import Breadcrumbs from '../components/Breadcrumbs';
+import { CartContext } from '../context/CartContext';
 
 const Cart = () => {
-  const { state, count } = useContext(CartContext);
-  console.log(state);
+  const { state, count, dispatch } = useContext(CartContext);
+
+  const totalPrice = state.reduce((acc, current) => {
+    return acc + current.price;
+  }, 0);
 
   return (
     <section className='max-w-300 mx-auto mb-10'>
@@ -50,18 +54,36 @@ const Cart = () => {
               <div className='flex shrink-0 items-center gap-4'>
                 <span className='font-bold'>${p.price}</span>
                 <button
+                  onClick={() =>
+                    dispatch({ type: 'remove_from_cart', payload: p.id })
+                  }
                   type='button'
                   aria-label={`Remove ${p.title} from cart`}
                   className='text-red-500'
                 >
-                  {/* Add your trash icon here */}×
+                  <FaXmark />
                 </button>
               </div>
             </div>
           ))}
         </div>
         <div className='border border-border-dark rounded-md bg-white p-4'>
-          <h1>Hello</h1>
+          <h1 className='font-bold text-[0.8rem] mb-2'>Order Summary</h1>
+          <ul>
+            <li className='flex justify-between text-gray-500 text-[0.8rem]'>
+              <span>Subtotal</span>
+              <span>${totalPrice.toFixed(2)}</span>
+            </li>
+            <li className='flex justify-between text-gray-500 text-[0.8rem]'>
+              <span>Shipping</span>
+              <span>Free</span>
+            </li>
+            <hr className='text-gray-300 mt-2' />
+            <li className='flex justify-between font-bold text-[0.8rem] mt-2'>
+              <span>Total</span>
+              <span>${totalPrice.toFixed(2)}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>

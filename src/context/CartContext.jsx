@@ -4,8 +4,13 @@ const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case 'add_to_cart':
+    case 'add_to_cart': {
+      const existProduct = state.some((item) => item.id === action.payload.id);
+      if (existProduct) return state;
       return [...state, action.payload];
+    }
+    case 'remove_from_cart':
+      return state.filter((item) => item.id !== action.payload);
 
     default:
       return state;
