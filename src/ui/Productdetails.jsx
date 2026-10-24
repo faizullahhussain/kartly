@@ -3,22 +3,50 @@ import { useParams } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
 import FeatureProducts from '../components/FeatureProducts';
 
+// Options per category. Add a new line here to support a new category.
+// Keys must match DummyJSON's category slugs exactly.
+const VOLUME = { label: 'Volume', options: ['30ml', '50ml', '100ml'] };
+const CLOTHING_SIZES = { label: 'Size', options: ['S', 'M', 'L', 'XL'] };
+
+const ATTRIBUTES_BY_CATEGORY = {
+  beauty: { label: 'Shade', options: ['Light', 'Medium', 'Dark'] },
+  fragrances: VOLUME,
+  furniture: { label: 'Color', options: ['Natural', 'Walnut', 'White'] },
+  groceries: { label: 'Weight', options: ['500g', '1kg', '2kg'] },
+  'home-decoration': { label: 'Color', options: ['White', 'Natural', 'Black'] },
+  laptops: { label: 'Storage', options: ['256GB', '512GB', '1TB'] },
+  'mens-shirts': CLOTHING_SIZES,
+  'mens-shoes': { label: 'Size', options: [40, 41, 42, 43, 44] },
+  'mens-watches': { label: 'Strap', options: ['Leather', 'Steel', 'Silicone'] },
+};
+
 const Productdetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const star = '★';
+
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null); // what the user clicked
+  const [quantity, setQuantity] = useState(1);
+  const [wishlisted, setWishlisted] = useState(false);
 
   useEffect(() => {
     const loadProductDetails = async () => {
+      setLoading(true);
+      setError(null);
+      setSelectedImage(0);
+      setSelectedOption(null);
+      setQuantity(1);
+      setWishlisted(false);
+
       try {
         const response = await fetch(
           `https://dummyjson.com/products/${productId}`,
         );
 
         if (!response.ok) {
-          throw new Error('Failded to load product details');
+          throw new Error('Failed to load product details');
         }
 
         const data = await response.json();
@@ -32,10 +60,24 @@ const Productdetails = () => {
     loadProductDetails();
   }, [productId]);
 
-  if (loading) {
-    return <p>Loading..</p>;
-  }
-  if (error) return <p className='text-red font-bold'>{error}</p>;
+  if (loading) return <p>Loading..</p>;
+  if (error) return <p className='text-red-600 font-bold'>{error}</p>;
+
+  const images = product.images?.length ? product.images : [product.thumbnail];
+  const filledStars = Math.round(product.rating);
+
+  const attribute = ATTRIBUTES_BY_CATEGORY[product.category];
+  const activeOption = selectedOption ?? attribute?.options[0];
+
+  const handleAddToCart = () => {
+    console.log({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      quantity,
+      ...(attribute && { [attribute.label.toLowerCase()]: activeOption }),
+    });
+  };
 
   return (
     <section className='max-w-300 mx-auto mb-15'>
@@ -43,24 +85,139 @@ const Productdetails = () => {
         items={[
           { label: 'Home', to: '/' },
           { label: 'Shop' },
-          { label: `Product ${productId}` },
+          { label: product.title },
         ]}
       />
+
       <div className='flex gap-10'>
-        <img
-          src={product.thumbnail}
-          alt={product.title}
-          className='w-80 bg-[#e0e7ff] rounded-md'
-        />
+        {/* Gallery */}
         <div>
+          <img
+            src={images[selectedImage]}
+            alt={product.title}
+            className='w-96 aspect-square object-contain bg-[#e0e7ff] rounded-2xl'
+          />
+
+          <div className='flex gap-3 mt-3'>
+            {images.map((img, index) => (
+              <img
+                key={img}
+                src={img}
+                alt={`${product.title} view ${index + 1}`}
+                onClick={() => setSelectedImage(index)}
+                className={`w-16 h-16 object-contain rounded-lg bg-[#e0e7ff] cursor-pointer border-2 ${
+                  index === selectedImage
+                    ? 'border-primary'
+                    : 'border-transparent'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Details */}
+        <div className='flex-1'>
           <p className='flex items-center gap-1 text-[0.8rem] text-[#687386]'>
-            {star.repeat(5)}
+            <span className='text-amber-400 text-lg tracking-tight'>
+              {'★'.repeat(filledStars)}
+              <span className='text-gray-300'>
+                {'★'.repeat(5 - filledStars)}
+              </span>
+            </span>
             {product.rating}
             <span>({product.reviews?.length ?? 0} reviews)</span>
           </p>
-          <h3 className='text-2xl text-secondary font-bold'>{product.title}</h3>
-          <h3 className='text-2xl text-primary font-bold'>${product.price}</h3>
-          <p>{product.description}</p>
+
+          <h3 className='text-3xl text-secondary font-bold mt-1'>
+            {product.title}
+          </h3>
+          <h3 className='text-2xl text-primary font-bold my-3'>
+            ${product.price}
+          </h3>
+          <p className='text-[#4b5563] max-w-xl'>{product.description}</p>
+
+          {/* Category-based options (hidden if the category has none) */}
+          {attribute && (
+            <>
+              <p className='font-bold mt-5 mb-2'>{attribute.label}</p>
+              <div className='flex flex-wrap gap-2'>
+                {attribute.options.map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => setSelectedOption(option)}
+                    className={`px-4 py-2 rounded-lg border-2 font-bold cursor-pointer ${
+                      option === activeOption
+                        ? 'border-primary text-primary'
+                        : 'border-gray-200'
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Quantity + actions */}
+          <div className='flex items-center gap-3 mt-6'>
+            <div className='flex items-center gap-4 border-2 border-gray-200 rounded-lg px-3 py-2'>
+              <button
+                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                className='cursor-pointer'
+                aria-label='Decrease quantity'
+              >
+                −
+              </button>
+              <span className='font-bold w-4 text-center'>{quantity}</span>
+              <button
+                onClick={() => setQuantity((q) => q + 1)}
+                className='cursor-pointer'
+                aria-label='Increase quantity'
+              >
+                +
+              </button>
+            </div>
+
+            <button
+              onClick={handleAddToCart}
+              className='flex items-center gap-2 bg-primary text-white font-bold px-6 py-3 rounded-lg cursor-pointer'
+            >
+              <svg
+                width='18'
+                height='18'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              >
+                <circle cx='9' cy='21' r='1' />
+                <circle cx='20' cy='21' r='1' />
+                <path d='M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6' />
+              </svg>
+              Add to cart
+            </button>
+
+            <button
+              onClick={() => setWishlisted((w) => !w)}
+              aria-label='Add to wishlist'
+              className='border-2 border-primary rounded-lg px-4 py-3 cursor-pointer text-primary'
+            >
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill={wishlisted ? 'currentColor' : 'none'}
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              >
+                <path d='M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z' />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
