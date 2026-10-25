@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import { useEffect, useState } from 'react';
+import ProductCard from './ProductCard';
 
-const categories = ["beauty", "fragrances", "furniture", "groceries"];
+const categories = ['beauty', 'fragrances', 'furniture', 'groceries'];
 
 // Best-rated, available product from each category
 const getFeatured = (products) =>
@@ -10,7 +10,7 @@ const getFeatured = (products) =>
       const best = products
         .filter(
           (p) =>
-            p.category === category && p.availabilityStatus !== "Out of Stock",
+            p.category === category && p.availabilityStatus !== 'Out of Stock',
         )
         .sort((a, b) => b.rating - a.rating);
       return best[0]; // undefined if nothing is available
@@ -25,8 +25,8 @@ const FeatureProducts = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await fetch("https://dummyjson.com/products?limit=0");
-        if (!res.ok) throw new Error("Failed to load products");
+        const res = await fetch('https://dummyjson.com/products?limit=0');
+        if (!res.ok) throw new Error('Failed to load products');
         const data = await res.json();
         setProducts(data.products);
       } catch (err) {
@@ -38,17 +38,17 @@ const FeatureProducts = () => {
     loadData();
   }, []);
 
-  if (loading) return <p className="p-4">Loading...</p>;
-  if (error) return <p className="p-4 text-red-600">{error}</p>;
+  if (loading) return <p className='p-4'>Loading...</p>;
+  if (error) return <p className='p-4 text-red-600'>{error}</p>;
 
   const featured = getFeatured(products);
 
   return (
-    <section className="mx-auto mt-12 w-full max-w-300 px-4">
-      <h2 className="mb-6 text-3xl font-bold text-secondary">
+    <section className='mx-auto mt-12 w-full max-w-300'>
+      <h2 className='mb-6 text-3xl font-bold text-secondary'>
         Featured products
       </h2>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4'>
         {featured.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

@@ -22,7 +22,7 @@ const Header = () => {
   const [openNav, setOpenNav] = useState(false);
 
   return (
-    <header className='border border-border-dark py-4'>
+    <header className='border border-border-dark py-2 px-4 md:py-4'>
       <nav className='flex justify-between items-center mx-auto max-w-300'>
         <a href='#' className='flex items-center text-primary'>
           <BiCart className='font-bold text-3xl' />
@@ -82,10 +82,14 @@ const Header = () => {
       </nav>
 
       {openNav && (
-        <ul className='md:hidden px-4 mt-4 absolute bg-white w-full h-screen'>
+        <ul className='absolute left-0 top-12 z-50 flex w-full flex-col gap-2 bg-white px-6 py-6 shadow-lg md:hidden'>
           {links.map((linke) => (
             <li key={linke.name}>
-              <a href='' onClick={() => setOpenNav(false)}>
+              <a
+                href={linke.href}
+                onClick={() => setOpenNav(false)}
+                className='block rounded-lg px-4 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-black'
+              >
                 {linke.name}
               </a>
             </li>

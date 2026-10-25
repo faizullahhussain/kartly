@@ -11,12 +11,14 @@ const App = () => {
   return (
     <CartProvider>
       <Header />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/shop' element={<Shop />} />
-        <Route path='product/:productId' element={<Productdetails />} />
-        <Route path='/cart' element={<Cart />} />
-      </Routes>
+      <main className='px-4'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/shop' element={<Shop />} />
+          <Route path='product/:productId' element={<Productdetails />} />
+          <Route path='/cart' element={<Cart />} />
+        </Routes>
+      </main>
       <Footer />
     </CartProvider>
   );
