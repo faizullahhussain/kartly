@@ -3,19 +3,14 @@ import { useParams } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
 import FeatureProducts from '../components/FeatureProducts';
 
-// Options per category. Add a new line here to support a new category.
-// Keys must match DummyJSON's category slugs exactly.
-const VOLUME = { label: 'Volume', options: ['30ml', '50ml', '100ml'] };
-const CLOTHING_SIZES = { label: 'Size', options: ['S', 'M', 'L', 'XL'] };
-
 const ATTRIBUTES_BY_CATEGORY = {
   beauty: { label: 'Shade', options: ['Light', 'Medium', 'Dark'] },
-  fragrances: VOLUME,
+  fragrances: { label: 'Volume', options: ['30ml', '50ml', '100ml'] },
   furniture: { label: 'Color', options: ['Natural', 'Walnut', 'White'] },
   groceries: { label: 'Weight', options: ['500g', '1kg', '2kg'] },
   'home-decoration': { label: 'Color', options: ['White', 'Natural', 'Black'] },
   laptops: { label: 'Storage', options: ['256GB', '512GB', '1TB'] },
-  'mens-shirts': CLOTHING_SIZES,
+  'mens-shirts': { label: 'Size', options: ['S', 'M', 'L', 'XL'] },
   'mens-shoes': { label: 'Size', options: [40, 41, 42, 43, 44] },
   'mens-watches': { label: 'Strap', options: ['Leather', 'Steel', 'Silicone'] },
 };
