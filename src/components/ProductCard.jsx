@@ -1,23 +1,26 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import ProductRating from './ProductRating';
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const { dispatch } = useContext(CartContext);
   return (
     <div className='rounded-2xl border border-gray-200 bg-white p-3'>
-      <div className='aspect-square overflow-hidden rounded-xl bg-gray-100'>
-        <img
-          src={product.thumbnail}
-          alt={product.title}
-          className='h-full w-full object-contain'
-        />
-      </div>
-      <h3 className='mt-3 truncate font-bold text-secondary'>
-        {product.title}
-      </h3>
+      <NavLink to={`/product/${product.id}`}>
+        <div className='aspect-square overflow-hidden rounded-xl bg-gray-100'>
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            className='h-full w-full object-contain'
+          />
+        </div>
+        <h3 className='mt-3 truncate font-bold text-secondary'>
+          {product.title}
+        </h3>
+      </NavLink>
       <div className='mt-1 text-sm text-gray-600'>
         <ProductRating rating={product.rating} />
       </div>
