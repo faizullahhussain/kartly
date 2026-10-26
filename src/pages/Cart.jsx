@@ -10,7 +10,7 @@ const Cart = () => {
   const totalPrice = state.reduce((sum, item) => {
     return sum + item.price * item.quantity;
   }, 0);
-
+  console.log(state);
   return (
     <>
       <section className='max-w-300 mx-auto mb-10'>

@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
 import FeatureProducts from '../components/FeatureProducts';
+import { CartContext } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
 
 const ATTRIBUTES_BY_CATEGORY = {
   beauty: { label: 'Shade', options: ['Light', 'Medium', 'Dark'] },
@@ -16,13 +18,15 @@ const ATTRIBUTES_BY_CATEGORY = {
 };
 
 const Productdetails = () => {
+  const navigate = useNavigate();
+  const { dispatch } = useContext(CartContext);
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null); // what the user clicked
+  const [selectedOption, setSelectedOption] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [wishlisted, setWishlisted] = useState(false);
 
@@ -65,13 +69,19 @@ const Productdetails = () => {
   const activeOption = selectedOption ?? attribute?.options[0];
 
   const handleAddToCart = () => {
-    console.log({
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      quantity,
-      ...(attribute && { [attribute.label.toLowerCase()]: activeOption }),
-    });
+    dispatch(
+      {
+        type: 'add_to_cart',
+        payload: {
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          quantity,
+          thumbnail: product.thumbnail,
+        },
+      },
+      navigate('/cart'),
+    );
   };
 
   return (

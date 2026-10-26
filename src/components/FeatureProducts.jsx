@@ -13,7 +13,7 @@ const getFeatured = (products) =>
             p.category === category && p.availabilityStatus !== 'Out of Stock',
         )
         .sort((a, b) => b.rating - a.rating);
-      return best[0]; // undefined if nothing is available
+      return best[0];
     })
     .filter(Boolean);
 

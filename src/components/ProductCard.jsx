@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 import ProductRating from './ProductRating';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
   const { dispatch } = useContext(CartContext);
   return (
     <div className='rounded-2xl border border-gray-200 bg-white p-3'>
@@ -29,6 +31,7 @@ const ProductCard = ({ product }) => {
               type: 'add_to_cart',
               payload: { ...product, quantity: 1 },
             });
+            navigate('/cart');
           }}
           className='cursor-pointer rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-white hover:opacity-90'
         >

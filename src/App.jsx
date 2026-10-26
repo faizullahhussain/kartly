@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Productdetails from './ui/Productdetails';
 import { CartProvider } from './context/CartContext';
+import PageTransition from './components/PageTransition';
 
 const App = () => {
   return (
@@ -13,10 +14,38 @@ const App = () => {
       <Header />
       <main className='px-4'>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/shop' element={<Shop />} />
-          <Route path='product/:productId' element={<Productdetails />} />
-          <Route path='/cart' element={<Cart />} />
+          <Route
+            path='/'
+            element={
+              <PageTransition>
+                <Home />
+              </PageTransition>
+            }
+          />
+          <Route
+            path='/shop'
+            element={
+              <PageTransition>
+                <Shop />
+              </PageTransition>
+            }
+          />
+          <Route
+            path='product/:productId'
+            element={
+              <PageTransition>
+                <Productdetails />
+              </PageTransition>
+            }
+          />
+          <Route
+            path='/cart'
+            element={
+              <PageTransition>
+                <Cart />
+              </PageTransition>
+            }
+          />
         </Routes>
       </main>
       <Footer />
