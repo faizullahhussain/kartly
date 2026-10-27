@@ -22,7 +22,7 @@ const Header = () => {
   const [openNav, setOpenNav] = useState(false);
 
   return (
-    <header className='border border-border-dark py-2 px-4 md:py-4'>
+    <header className='border border-border-dark py-2 px-4 md:py-4 bg-white'>
       <nav className='flex justify-between items-center mx-auto max-w-300'>
         <a href='#' className='flex items-center text-primary'>
           <BiCart className='font-bold text-3xl' />

@@ -1,7 +1,9 @@
 import { useContext } from 'react';
+import { FaArrowRight } from 'react-icons/fa';
 import { FiTrash } from 'react-icons/fi';
 import Breadcrumbs from '../components/Breadcrumbs';
 import EmptyCard from '../components/EmptyCard';
+import OrderSummary from '../components/OrderSummary';
 import { CartContext } from '../context/CartContext';
 
 const Cart = () => {
@@ -10,7 +12,7 @@ const Cart = () => {
   const totalPrice = state.reduce((sum, item) => {
     return sum + item.price * item.quantity;
   }, 0);
-  console.log(state);
+
   return (
     <>
       <section className='max-w-300 mx-auto mb-10'>
@@ -100,21 +102,11 @@ const Cart = () => {
               </div>
               <div className='border border-border-dark rounded-md bg-white p-4'>
                 <h1 className='font-bold text-[0.8rem] mb-2'>Order Summary</h1>
-                <ul>
-                  <li className='flex justify-between text-gray-500 text-[0.8rem]'>
-                    <span>Subtotal</span>
-                    <span>${totalPrice.toFixed(0)}</span>
-                  </li>
-                  <li className='flex justify-between text-gray-500 text-[0.8rem]'>
-                    <span>Shipping</span>
-                    <span>Free</span>
-                  </li>
-                  <hr className='text-gray-300 mt-2' />
-                  <li className='flex justify-between font-bold text-[0.8rem] mt-2'>
-                    <span>Total</span>
-                    <span>${totalPrice.toFixed(0)}</span>
-                  </li>
-                </ul>
+                <OrderSummary
+                  totalPrice={totalPrice}
+                  buttonText='Checkout'
+                  icon={<FaArrowRight />}
+                />
               </div>
             </div>
           </>

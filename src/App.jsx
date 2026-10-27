@@ -1,12 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import PageTransition from './components/PageTransition';
+import { CartProvider } from './context/CartContext';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Productdetails from './ui/Productdetails';
-import { CartProvider } from './context/CartContext';
-import PageTransition from './components/PageTransition';
 
 const App = () => {
   return (
@@ -43,6 +44,14 @@ const App = () => {
             element={
               <PageTransition>
                 <Cart />
+              </PageTransition>
+            }
+          />
+          <Route
+            path='/checkout'
+            element={
+              <PageTransition>
+                <Checkout />
               </PageTransition>
             }
           />
