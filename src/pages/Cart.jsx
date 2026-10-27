@@ -104,7 +104,7 @@ const Cart = () => {
                 <h1 className='font-bold text-[0.8rem] mb-2'>Order Summary</h1>
                 <OrderSummary
                   totalPrice={totalPrice}
-                  buttonText='Checkout'
+                  mode='cart'
                   icon={<FaArrowRight />}
                 />
               </div>
