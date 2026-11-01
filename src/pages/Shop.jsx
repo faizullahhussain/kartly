@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductCard from '../components/ProductCard';
 
@@ -145,9 +144,7 @@ const Shop = () => {
         <div>
           <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
             {currentProducts.map((product) => (
-              <NavLink key={product.id} to={`/product/${product.id}`}>
-                <ProductCard product={product} />
-              </NavLink>
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
 

@@ -18,7 +18,7 @@ const ModalCheckout = ({ setIsOpen, formData, totalPrice }) => {
         </div>
         <button
           onClick={() => setIsOpen(false)}
-          className='text-2xl text-gray-500 hover:text-gray-900 absolute top-1 right-3'
+          className='text-2xl text-gray-500 hover:text-gray-900 absolute top-1 right-3 cursor-pointer'
           aria-label='Close modal'
         >
           &times;

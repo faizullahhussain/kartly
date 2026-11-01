@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { BiCart, BiHeart, BiSearch, BiUser } from 'react-icons/bi';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { Link, NavLink } from 'react-router-dom';
@@ -20,6 +20,34 @@ const navClass = ({ isActive }) =>
 const Header = () => {
   const { count } = useContext(CartContext);
   const [openNav, setOpenNav] = useState(false);
+  const [product, setProduct] = useState([]);
+  const [error, setError] = useState(null);
+  const [searchProduct, setSearchProduct] = useState('');
+
+  const filteredProduct = product.filter((filterProduct) => {
+    const query = searchProduct.toLowerCase();
+    return filterProduct.title.toLowerCase().includes(query);
+  });
+
+  useEffect(() => {
+    const filterProduct = async () => {
+      try {
+        const response = await fetch('https://dummyjson.com/products?limit=0');
+        if (!response.ok) {
+          throw new Error('Products are not loaded');
+        }
+        const data = await response.json();
+        setProduct(data.products);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+    filterProduct();
+  }, []);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <header className='border border-border-dark py-2 px-4 md:py-4 bg-white'>
@@ -53,14 +81,54 @@ const Header = () => {
         </button>
 
         <div className='hidden md:flex md:justify-center md:items-center gap-4'>
-          <form className='flex items-center p-1 rounded-full bg-[#f3f4f6] px-3'>
-            <BiSearch />
-            <input
-              type='text'
-              placeholder='Search products'
-              className='outline-none'
-            />
-          </form>
+          <div className='relative'>
+            <form className='flex items-center p-1 rounded-full bg-[#f3f4f6] px-3'>
+              <BiSearch className='text-gray-500' />
+              <input
+                type='text'
+                placeholder='Search products...'
+                className='outline-none text-gray-500'
+                value={searchProduct}
+                onChange={(e) => setSearchProduct(e.target.value)}
+              />
+            </form>
+
+            {searchProduct.length > 0 && (
+              <ul className='absolute top-10 p-3 border border-border-dark bg-white rounded-md max-w-125'>
+                {filteredProduct.length > 0 ? (
+                  filteredProduct.slice(0, 5).map((pro) => (
+                    <li>
+                      <Link
+                        to={`/product/${pro.id}`}
+                        key={pro.id}
+                        className='flex justify-between gap-4'
+                        onClick={() => setSearchProduct('')}
+                      >
+                        <div className='flex gap-2'>
+                          <img
+                            className='w-10 h-10 object-contain bg-[#e0e7ff] rounded-md mb-3'
+                            src={pro.thumbnail}
+                            alt={pro.title}
+                          />
+                          <span className='text-sm text-gray-500'>
+                            {pro.title}
+                          </span>
+                        </div>
+                        <strong>
+                          <span className='text-sm text-gray-500'>
+                            ${pro.price}
+                          </span>
+                        </strong>
+                      </Link>
+                    </li>
+                  ))
+                ) : (
+                  <li className='text-sm text-gray-500'>no products found</li>
+                )}
+              </ul>
+            )}
+          </div>
+
           <ul className='flex gap-6'>
             <li>
               <BiHeart />
