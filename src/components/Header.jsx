@@ -11,10 +11,10 @@ const links = [
 ];
 
 const navClass = ({ isActive }) =>
-  `text-[0.9rem] font-semibold transition-colos ${
+  `text-[0.9rem] font-semibold transition-colors ${
     isActive
       ? 'text-primary underline underline-offset-4'
-      : 'text-secondary  hover:text-primary'
+      : 'text-secondary hover:text-primary'
   }`;
 
 const Header = () => {
@@ -24,13 +24,13 @@ const Header = () => {
   const [error, setError] = useState(null);
   const [searchProduct, setSearchProduct] = useState('');
 
-  const filteredProduct = product.filter((filterProduct) => {
-    const query = searchProduct.toLowerCase();
-    return filterProduct.title.toLowerCase().includes(query);
-  });
+  const query = searchProduct.trim().toLowerCase();
+  const filteredProduct = product.filter((item) =>
+    item.title.toLowerCase().includes(query),
+  );
 
   useEffect(() => {
-    const filterProduct = async () => {
+    const loadProducts = async () => {
       try {
         const response = await fetch('https://dummyjson.com/products?limit=0');
         if (!response.ok) {
@@ -42,20 +42,16 @@ const Header = () => {
         setError(error.message);
       }
     };
-    filterProduct();
+    loadProducts();
   }, []);
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-
   return (
-    <header className='border border-border-dark py-2 px-4 md:py-4 bg-white'>
+    <header className='relative border border-border-dark py-2 px-4 md:py-4 bg-white'>
       <nav className='flex justify-between items-center mx-auto max-w-300'>
-        <a href='#' className='flex items-center text-primary'>
+        <Link to='/' className='flex items-center text-primary'>
           <BiCart className='font-bold text-3xl' />
-          <span className='font-bold text-[1rem] md:text-2xl'>Kartley</span>
-        </a>
+          <span className='font-bold text-[1rem] md:text-2xl'>Kartly</span>
+        </Link>
 
         <ul className='hidden md:flex gap-6'>
           {links.map((link) => (
@@ -82,25 +78,30 @@ const Header = () => {
 
         <div className='hidden md:flex md:justify-center md:items-center gap-4'>
           <div className='relative'>
-            <form className='flex items-center p-1 rounded-full bg-[#f3f4f6] px-3'>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className='flex items-center p-1 rounded-full bg-[#f3f4f6] px-3'
+            >
               <BiSearch className='text-gray-500' />
               <input
                 type='text'
                 placeholder='Search products...'
+                aria-label='Search products'
                 className='outline-none text-gray-500'
                 value={searchProduct}
                 onChange={(e) => setSearchProduct(e.target.value)}
               />
             </form>
 
-            {searchProduct.length > 0 && (
-              <ul className='absolute top-10 p-3 border border-border-dark bg-white rounded-md max-w-125'>
-                {filteredProduct.length > 0 ? (
+            {query.length > 0 && (
+              <ul className='absolute top-10 z-50 p-3 border border-border-dark bg-white rounded-md max-w-125'>
+                {error ? (
+                  <li className='text-sm text-red-600'>{error}</li>
+                ) : filteredProduct.length > 0 ? (
                   filteredProduct.slice(0, 5).map((pro) => (
-                    <li>
+                    <li key={pro.id}>
                       <Link
                         to={`/product/${pro.id}`}
-                        key={pro.id}
                         className='flex justify-between gap-4'
                         onClick={() => setSearchProduct('')}
                       >
@@ -123,7 +124,7 @@ const Header = () => {
                     </li>
                   ))
                 ) : (
-                  <li className='text-sm text-gray-500'>no products found</li>
+                  <li className='text-sm text-gray-500'>No products found</li>
                 )}
               </ul>
             )}
@@ -151,15 +152,15 @@ const Header = () => {
 
       {openNav && (
         <ul className='absolute left-0 top-12 z-50 flex w-full flex-col gap-2 bg-white px-6 py-6 shadow-lg md:hidden'>
-          {links.map((linke) => (
-            <li key={linke.name}>
-              <a
-                href={linke.href}
+          {links.map((link) => (
+            <li key={link.name}>
+              <NavLink
+                to={link.href}
                 onClick={() => setOpenNav(false)}
                 className='block rounded-lg px-4 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-black'
               >
-                {linke.name}
-              </a>
+                {link.name}
+              </NavLink>
             </li>
           ))}
         </ul>

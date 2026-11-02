@@ -97,7 +97,7 @@ const Shop = () => {
     <section className='max-w-300 mx-auto'>
       <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Shop' }]} />
 
-      <div className='flex justify-between items-center'>
+      <div className='flex justify-between items-center '>
         <h1 className='mb-6 text-3xl font-bold text-secondary'>All Products</h1>
 
         <select
@@ -120,7 +120,7 @@ const Shop = () => {
 
       <div className='grid grid-cols-1 items-start md:grid-cols-[250px_minmax(0,1fr)] gap-8 pb-10'>
         {/* Category sidebar */}
-        <div className='bg-white border border-border-dark rounded-md p-4 sticky top-4'>
+        <div className='bg-white border border-border-dark rounded-md p-4 sticky top-4 order-2 md:order-1'>
           <h2 className='font-semibold mb-3'>Categories</h2>
 
           <ul className='space-y-2'>
@@ -141,8 +141,8 @@ const Shop = () => {
         </div>
 
         {/* Products and pagination */}
-        <div>
-          <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+        <div className='order-1 md:order-2 '>
+          <div className='grid grid-cols-2 gap-4 md:grid-cols-3'>
             {currentProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

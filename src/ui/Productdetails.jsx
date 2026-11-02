@@ -94,7 +94,7 @@ const Productdetails = () => {
         ]}
       />
 
-      <div className='flex gap-10'>
+      <div className='flex flex-col md:flex-row gap-10'>
         {/* Gallery */}
         <div>
           <img

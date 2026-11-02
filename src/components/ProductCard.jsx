@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
       <div className='mt-1 text-sm text-gray-600'>
         <ProductRating rating={product.rating} />
       </div>
-      <div className='mt-2 flex items-center justify-between'>
+      <div className='mt-2 flex flex-col md:flex-row items-center justify-between'>
         <span className='text-xl font-bold'>${product.price}</span>
         <button
           onClick={(e) => {
