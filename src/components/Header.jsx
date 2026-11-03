@@ -1,8 +1,15 @@
 import { useContext, useState, useEffect } from 'react';
-import { BiCart, BiHeart, BiSearch, BiUser } from 'react-icons/bi';
+import {
+  BiCart,
+  BiHeart,
+  BiSearch,
+  BiUser,
+  BiSolidHeart,
+} from 'react-icons/bi';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { Link, NavLink } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import { useFavorite } from '../context/FavoriteContext';
 
 const links = [
   { name: 'Home', href: '/' },
@@ -18,6 +25,7 @@ const navClass = ({ isActive }) =>
   }`;
 
 const Header = () => {
+  const { favorites } = useFavorite();
   const { count } = useContext(CartContext);
   const [openNav, setOpenNav] = useState(false);
   const [product, setProduct] = useState([]);
@@ -28,6 +36,8 @@ const Header = () => {
   const filteredProduct = product.filter((item) =>
     item.title.toLowerCase().includes(query),
   );
+
+  const hasFavorite = favorites.length > 0;
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -133,7 +143,11 @@ const Header = () => {
           <ul className='flex gap-6'>
             <li>
               <Link to='/favorite'>
-                <BiHeart />
+                {hasFavorite ? (
+                  <BiSolidHeart className='text-primary' />
+                ) : (
+                  <BiHeart className='text-black' />
+                )}
               </Link>
             </li>
             <li>

@@ -33,9 +33,12 @@ const ProductCard = ({ product }) => {
             className='absolute top-2 right-4 z-50 rounded-full bg-white p-2'
           >
             {isFavorite(product.id) ? (
-              <BiSolidHeart size={20} className='text-indigo-600' />
+              <BiSolidHeart
+                size={20}
+                className='text-indigo-600 cursor-pointer'
+              />
             ) : (
-              <BiHeart size={20} className='text-gray-500' />
+              <BiHeart size={20} className='text-gray-500 cursor-pointer' />
             )}
           </button>
         </div>
