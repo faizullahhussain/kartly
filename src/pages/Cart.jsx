@@ -5,6 +5,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import EmptyCard from '../components/EmptyCard';
 import OrderSummary from '../components/OrderSummary';
 import { CartContext } from '../context/CartContext';
+import { BiCart } from 'react-icons/bi';
 
 const Cart = () => {
   const { state, count, dispatch } = useContext(CartContext);
@@ -112,7 +113,14 @@ const Cart = () => {
           </>
         )}
       </section>
-      {state.length === 0 && <EmptyCard />}
+      {state.length === 0 && (
+        <EmptyCard
+          icon={BiCart}
+          cardTitle='Your cart is empty'
+          cardDescription='Looks like you have not added anything yet. Browse our products and find
+        something you will love.'
+        />
+      )}
     </>
   );
 };
