@@ -8,6 +8,7 @@ import Checkout from './pages/Checkout';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Productdetails from './ui/Productdetails';
+import FavoritesProduct from './components/FavoritesProduct';
 
 const App = () => {
   return (
@@ -55,6 +56,15 @@ const App = () => {
               </PageTransition>
             }
           />
+
+          <Route
+            path='/favorite'
+            element={
+              <PageTransition>
+                <FavoritesProduct />
+              </PageTransition>
+            }
+          ></Route>
         </Routes>
       </main>
       <Footer />

@@ -80,14 +80,14 @@ const Header = () => {
           <div className='relative'>
             <form
               onSubmit={(e) => e.preventDefault()}
-              className='flex items-center p-1 rounded-full bg-[#f3f4f6] px-3'
+              className='flex items-center gap-1 p-1 rounded-full bg-[#f3f4f6] px-3'
             >
               <BiSearch className='text-gray-500' />
               <input
                 type='text'
                 placeholder='Search products...'
                 aria-label='Search products'
-                className='outline-none text-gray-500'
+                className='outline-none text-gray-500 text-sm'
                 value={searchProduct}
                 onChange={(e) => setSearchProduct(e.target.value)}
               />
@@ -132,7 +132,9 @@ const Header = () => {
 
           <ul className='flex gap-6'>
             <li>
-              <BiHeart />
+              <Link to='/favorite'>
+                <BiHeart />
+              </Link>
             </li>
             <li>
               <BiUser />
