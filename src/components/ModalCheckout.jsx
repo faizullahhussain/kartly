@@ -44,13 +44,6 @@ const ModalCheckout = ({ setIsOpen, formData, totalPrice }) => {
             </li>
 
             <li className='flex justify-between items-center'>
-              <span className='text-[0.9rem] text-[#6e6b7d]'>Address:</span>
-              <span>
-                <strong>{formData.address}</strong>
-              </span>
-            </li>
-
-            <li className='flex justify-between items-center'>
               <span className='text-[0.9rem] text-[#6e6b7d]'>City:</span>
               <span>
                 <strong>{formData.city}</strong>

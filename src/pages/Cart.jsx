@@ -17,10 +17,11 @@ const Cart = () => {
   return (
     <>
       <section className='max-w-280 mx-auto mb-10'>
-        <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Cart' }]} />
-
         {state.length > 0 && (
           <>
+            <Breadcrumbs
+              items={[{ label: 'Home', to: '/' }, { label: 'Cart' }]}
+            />
             <h1 className='text-2xl font-bold mb-4'>Shopping Cart ({count})</h1>
 
             <div className='grid grid-cols-1 items-start md:grid-cols-[1fr_minmax(0,250px)] gap-8'>

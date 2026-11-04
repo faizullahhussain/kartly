@@ -14,23 +14,22 @@ const FavoritesProduct = () => {
   const { dispatch } = useContext(CartContext);
   const { clearFavorites, favorites } = useFavorite();
   return (
-    <section className='max-w-280 mx-auto mb-10'>
-      <div className='flex justify-between items-center'>
-        <div>
-          <Breadcrumbs
-            items={[{ label: 'Home', to: '/' }, { label: 'Favorites' }]}
-          />
-        </div>
-        <button
-          onClick={clearFavorites}
-          className='text-sm text-gray-500 cursor-pointer'
-        >
-          Clear all
-        </button>
-      </div>
-
+    <section className='max-w-280 mx-auto my-10'>
       {favorites.length > 0 && (
         <>
+          <div className='flex justify-between items-center'>
+            <div>
+              <Breadcrumbs
+                items={[{ label: 'Home', to: '/' }, { label: 'Favorites' }]}
+              />
+            </div>
+            <button
+              onClick={clearFavorites}
+              className='text-sm text-gray-500 cursor-pointer'
+            >
+              Clear all
+            </button>
+          </div>
           <h1 className='text-2xl font-bold mb-4'>
             My Favorites ({favorites.length})
           </h1>
@@ -93,13 +92,6 @@ const FavoritesProduct = () => {
           icon={BiHeart}
         />
       )}
-
-      <Link
-        to='/shop'
-        className='flex items-center gap-2 text-primary mt-8 cursor-pointer'
-      >
-        <BsArrowLeft /> Continue Shopping
-      </Link>
     </section>
   );
 };

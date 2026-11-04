@@ -16,10 +16,6 @@ const CheckoutForm = ({ handleSubmit }) => {
         <Input type='email' name='email' placeholder='Email address' />
       </div>
 
-      <div>
-        <Input type='text' name='address' placeholder='Streat address' />
-      </div>
-
       <div className='flex gap-4 rounded-md'>
         <Input type='text' name='city' placeholder='City' />
         <Input type='number' name='postalCode' placeholder='Postal Code' />
