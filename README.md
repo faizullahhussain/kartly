@@ -48,7 +48,7 @@ Kartly is a modern, responsive e-commerce frontend built with React. It provides
 Clone the repository:
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/faizullahhussain/kartly.git
 ```
 
 Navigate to the project directory:
