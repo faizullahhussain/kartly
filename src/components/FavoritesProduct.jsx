@@ -1,20 +1,19 @@
 import { useContext } from 'react';
-import { BsArrowLeft } from 'react-icons/bs';
+import { BiHeart } from 'react-icons/bi';
 import { FaShoppingBasket } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { useFavorite } from '../context/FavoriteContext';
 import Breadcrumbs from './Breadcrumbs';
-import ProductRating from './ProductRating';
 import EmptyCard from './EmptyCard';
-import { BiHeart } from 'react-icons/bi';
+import ProductRating from './ProductRating';
 
 const FavoritesProduct = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(CartContext);
   const { clearFavorites, favorites } = useFavorite();
   return (
-    <section className='max-w-280 mx-auto my-10'>
+    <section className='max-w-280 mx-auto mb-10'>
       {favorites.length > 0 && (
         <>
           <div className='flex justify-between items-center'>

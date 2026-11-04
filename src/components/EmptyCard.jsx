@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const EmptyCard = ({ cardTitle, cardDescription, icon: Icon }) => {
   return (
-    <section className='text-center mb-30'>
+    <section className='text-center my-30'>
       <span className='bg-[#e0e7ff] inline-block p-4 rounded-full'>
         <Icon size={30} className='mx-auto ' />
       </span>
