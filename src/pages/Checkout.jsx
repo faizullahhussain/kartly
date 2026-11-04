@@ -22,7 +22,7 @@ const Checkout = () => {
   };
 
   return (
-    <section className='max-w-300 mx-auto mb-4 bg-light'>
+    <section className='max-w-280 mx-auto mb-4 bg-light'>
       <Breadcrumbs
         items={[
           { label: 'Home', to: '/' },

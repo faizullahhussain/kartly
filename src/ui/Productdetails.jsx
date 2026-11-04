@@ -85,7 +85,7 @@ const Productdetails = () => {
   };
 
   return (
-    <section className='max-w-300 mx-auto mb-15'>
+    <section className='max-w-280 mx-auto mb-15'>
       <Breadcrumbs
         items={[
           { label: 'Home', to: '/' },

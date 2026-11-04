@@ -9,7 +9,7 @@ import FeatureProduct from '../components/FeatureProducts';
 const Home = () => {
   return (
     <>
-      <section className='mx-auto mt-8 w-full max-w-300'>
+      <section className='mx-auto mt-8 w-full max-w-280'>
         <div className='flex flex-col overflow-hidden rounded-[28px] bg-indigo-50 md:h-105 md:flex-row md:items-center'>
           {/* Text side */}
           <div className='p-8 md:w-140 md:shrink-0 md:px-15 md:py-0'>
@@ -40,7 +40,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className='grid grid-cols-3 gap-4 mx-auto max-w-300 my-10'>
+      <section className='grid grid-cols-3 gap-4 mx-auto max-w-280 my-10'>
         <div className='flex flex-col md:flex-row items-center gap-2 bg-white border border-border-dark rounded-md p-3'>
           <TbTruck size={24} className='text-primary' />
           <div>

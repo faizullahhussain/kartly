@@ -14,7 +14,7 @@ const FavoritesProduct = () => {
   const { dispatch } = useContext(CartContext);
   const { clearFavorites, favorites } = useFavorite();
   return (
-    <section className='max-w-300 mx-auto mb-10'>
+    <section className='max-w-280 mx-auto mb-10'>
       <div className='flex justify-between items-center'>
         <div>
           <Breadcrumbs
@@ -77,7 +77,9 @@ const FavoritesProduct = () => {
                   className='bg-primary flex p-2 rounded-md text-white justify-center items-center gap-2 mt-4'
                 >
                   <FaShoppingBasket />
-                  <span className='font-semibold text-sm'>Add to cart</span>
+                  <span className='font-semibold text-sm cursor-pointer'>
+                    Add to cart
+                  </span>
                 </button>
               </div>
             ))}
@@ -92,7 +94,10 @@ const FavoritesProduct = () => {
         />
       )}
 
-      <Link to='/shop' className='flex items-center gap-2 text-primary mt-8'>
+      <Link
+        to='/shop'
+        className='flex items-center gap-2 text-primary mt-8 cursor-pointer'
+      >
         <BsArrowLeft /> Continue Shopping
       </Link>
     </section>

@@ -16,7 +16,7 @@ const Cart = () => {
 
   return (
     <>
-      <section className='max-w-300 mx-auto mb-10'>
+      <section className='max-w-280 mx-auto mb-10'>
         <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Cart' }]} />
 
         {state.length > 0 && (

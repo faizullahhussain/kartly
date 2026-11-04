@@ -44,7 +44,7 @@ const FeatureProducts = () => {
   const featured = getFeatured(products);
 
   return (
-    <section className='mx-auto mt-12 w-full max-w-300'>
+    <section className='mx-auto mt-12 w-full max-w-280'>
       <h2 className='mb-6 text-3xl font-bold text-secondary'>
         Featured products
       </h2>

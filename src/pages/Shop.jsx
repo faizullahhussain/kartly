@@ -94,7 +94,7 @@ const Shop = () => {
   }
 
   return (
-    <section className='max-w-300 mx-auto'>
+    <section className='max-w-280 mx-auto'>
       <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Shop' }]} />
 
       <div className='flex justify-between items-center '>

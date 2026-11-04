@@ -57,7 +57,7 @@ const Header = () => {
 
   return (
     <header className='relative border border-border-dark py-2 px-4 md:py-4 bg-white'>
-      <nav className='flex justify-between items-center mx-auto max-w-300'>
+      <nav className='flex justify-between items-center mx-auto max-w-280'>
         <Link to='/' className='flex items-center text-primary'>
           <BiCart className='font-bold text-3xl' />
           <span className='font-bold text-[1rem] md:text-2xl'>Kartly</span>
