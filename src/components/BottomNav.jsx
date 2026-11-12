@@ -23,14 +23,14 @@ const BottomNav = () => {
         return (
           <NavLink key={link.name} to={link.href} className={navStyle}>
             <div className='relative'>
-              <Icon size={28} />
+              <Icon size={18} />
               {link.href === '/cart' && count > 0 && (
                 <span className='absolute -top-2 -right-2 rounded-full bg-primary text-white text-sm w-5 h-5 flex justify-center items-center'>
                   {count}
                 </span>
               )}
             </div>
-            {link.name}
+            <span className='text-[0.8rem]'>{link.name}</span>
           </NavLink>
         );
       })}
