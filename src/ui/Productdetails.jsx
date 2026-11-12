@@ -185,7 +185,7 @@ const Productdetails = () => {
 
             <button
               onClick={handleAddToCart}
-              className='flex items-center gap-2 bg-primary text-white font-bold px-6 py-3 rounded-lg cursor-pointer'
+              className='flex items-center gap-2 bg-primary text-white font-bold px-4 py-2 md:px-6 md:py-3 rounded-lg cursor-pointer'
             >
               <svg
                 width='18'

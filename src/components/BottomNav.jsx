@@ -1,7 +1,15 @@
-import { BiCart, BiHeart, BiHome, BiStoreAlt } from 'react-icons/bi';
-import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
+import {
+  BiCart,
+  BiHeart,
+  BiHome,
+  BiStoreAlt,
+  BiSolidHeart,
+} from 'react-icons/bi';
+import { NavLink } from 'react-router-dom';
+
 import { CartContext } from '../context/CartContext';
+import { useFavorite } from '../context/FavoriteContext';
 
 const links = [
   { name: 'Home', href: '/', icon: BiHome },
@@ -10,27 +18,56 @@ const links = [
   { name: 'Cart', href: '/cart', icon: BiCart },
 ];
 
-const navStyle = ({ isActive }) =>
-  `relative flex flex-col justify-center items-center transition-colors ${isActive ? 'before:absolute before:-top-4 before:h-1 before:w-12 before:rounded-full before:bg-primary text-primary' : 'text-secondary'}`;
+const navStyle = (isActive, isFavorite) =>
+  `relative flex flex-col justify-center items-center gap-1 transition-colors ${
+    isActive || isFavorite
+      ? 'before:absolute before:-top-4 before:h-1 before:w-12 before:rounded-full before:bg-primary text-primary'
+      : 'text-secondary'
+  }`;
 
 const BottomNav = () => {
   const { count } = useContext(CartContext);
+  const { favorites } = useFavorite();
+
   return (
-    <nav className='fixed bottom-0 left-0 right-0 flex justify-around items-center gap-4 md:hidden bg-white border-t border-border-dark p-4 z-100 shadow-lg'>
+    <nav className='fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around gap-4 border-t border-border-dark bg-white p-4 shadow-lg md:hidden'>
       {links.map((link) => {
-        const Icon = link.icon;
+        const isFavorite = link.href === '/favorite' && favorites.length > 0;
 
         return (
-          <NavLink key={link.name} to={link.href} className={navStyle}>
-            <div className='relative'>
-              <Icon size={18} />
-              {link.href === '/cart' && count > 0 && (
-                <span className='absolute -top-2 -right-2 rounded-full bg-primary text-white text-sm w-5 h-5 flex justify-center items-center'>
-                  {count}
-                </span>
-              )}
-            </div>
-            <span className='text-[0.8rem]'>{link.name}</span>
+          <NavLink
+            key={link.name}
+            to={link.href}
+            className={({ isActive }) => navStyle(isActive, isFavorite)}
+          >
+            {({ isActive }) => {
+              const Icon =
+                link.href === '/favorite' && isFavorite
+                  ? BiSolidHeart
+                  : link.icon;
+
+              return (
+                <>
+                  <div className='relative'>
+                    <Icon size={18} />
+
+                    {link.href === '/cart' && count > 0 && (
+                      <span className='absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.5rem] text-white'>
+                        {count > 99 ? '99+' : count}
+                      </span>
+                    )}
+                  </div>
+
+                  <span
+                    className={`text-[0.8rem] ${
+                      isActive || isFavorite ? 'text-primary' : 'text-secondary'
+                    }`}
+                  >
+                    {link.name}
+                  </span>
+                </>
+              );
+            }}
           </NavLink>
         );
       })}
