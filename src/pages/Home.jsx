@@ -70,7 +70,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className='mx-auto max-w-300 my-10'>
+      <section className='mx-auto max-w-280 my-10'>
         <FeatureProduct />
       </section>
     </>

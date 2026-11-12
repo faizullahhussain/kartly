@@ -135,6 +135,7 @@ const Shop = () => {
                   />
                   {category.replaceAll('-', ' ')}
                 </label>
+                <img src={category.thumbnail} alt='' />
               </li>
             ))}
           </ul>

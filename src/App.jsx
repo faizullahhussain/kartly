@@ -10,13 +10,14 @@ import Shop from './pages/Shop';
 import Productdetails from './ui/Productdetails';
 import FavoritesProduct from './components/FavoritesProduct';
 import { FavoritesProvider } from './context/FavoriteContext';
+import PageNotFound from './components/PageNotFound';
 
 const App = () => {
   return (
     <CartProvider>
       <FavoritesProvider>
         <Header />
-        <main className='px-4'>
+        <main className='px-4 pb-18 md:pb-0'>
           <Routes>
             <Route
               path='/'
@@ -64,6 +65,14 @@ const App = () => {
               element={
                 <PageTransition>
                   <FavoritesProduct />
+                </PageTransition>
+              }
+            ></Route>
+            <Route
+              path='*'
+              element={
+                <PageTransition>
+                  <PageNotFound />
                 </PageTransition>
               }
             ></Route>
