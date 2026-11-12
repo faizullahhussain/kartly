@@ -19,10 +19,8 @@ const links = [
 ];
 
 const navStyle = (isActive, isFavorite) =>
-  `relative flex flex-col justify-center items-center gap-1 transition-colors ${
-    isActive || isFavorite
-      ? 'before:absolute before:-top-4 before:h-1 before:w-12 before:rounded-full before:bg-primary text-primary'
-      : 'text-secondary'
+  `flex flex-col justify-center items-center gap-1 transition-colors ${
+    isActive || isFavorite ? ' text-primary' : 'text-secondary'
   }`;
 
 const BottomNav = () => {
